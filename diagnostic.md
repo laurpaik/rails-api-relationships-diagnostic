@@ -15,6 +15,9 @@ Place your responses inside the fenced code-blocks where indivated by comments.
   join table with references to `Movies` and `Profiles`.
 
   ```md
+    A `Profiles` table would have columns for `given_name`, `surname`, and `email`, and each row would be a different profile.
+    A `Movies` table would have columns for `title`, `release_date`, and `length`, and each row would be a different movie.
+    A `Favorites` table would have reference columns for `Profiles` and `Movies` and maybe another column for `date_added` for the date a movie was added to a profile's favorites.
 
     A `Profile` has many `Favorites` and has many `Movies` through `Favorites`...
     A `Movie` also has many `Favorites` and has many `Profiles` through `Favorites`...
@@ -51,6 +54,7 @@ Place your responses inside the fenced code-blocks where indivated by comments.
     belongs_to :movie
     validates :profile, presence: true
     validates :movie, presence: true
+    validates :date_added, presence: true
   end
   ```
 
@@ -59,7 +63,7 @@ like to show all movies favorited by a profile on
 `http://localhost:3000/profiles/1`
 
   ```md
-  Serializers filter and reshape data for what the server can send out or receive.
+  Serializers filter and reshape data for what the server can send out or receive... so in the below code we have a serializer for Profiles that shows us the different attributes of a profile and picks out the id of every movie associated with a profile and puts it into an array for us to see.
   ```
 
   ```rb
@@ -76,13 +80,13 @@ like to show all movies favorited by a profile on
 the above `Movies` and `Profiles`.
 
   ```sh
-    bin/rails generate scaffold favorite profile:references movie:references
+    bin/rails generate scaffold favorite profile:references movie:references date_added:date
   ```
 
 1.  What is `Dependent: Destroy` and where/why would we use it?
 
   ```md
-    I think it's when we delete a row on the join table? So in this case we'd use it if a user decided she didn't like a movie anymore and wanted to remove it from her Favorites.
+    I think it's when we delete a row on the join table (not 100% sure)? So in this case we'd use it if a user decided she didn't like a movie anymore and wanted to remove it from her Favorites.
   ```
 
 1.  Think of **ANY** example where you would have a one-to-many relationship as well
